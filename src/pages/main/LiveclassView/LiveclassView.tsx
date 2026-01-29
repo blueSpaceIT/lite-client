@@ -92,7 +92,7 @@ const LiveclassView = () => {
             meetingNumber,
             password: String(password),
             userName: String(user?.name),
-            leaveUrl: `http://localhost:5173/my-course/${courseID}/module/${moduleID}/live-class/${liveclassID}`,
+            leaveUrl: `https://liteedu.com/my-course/${courseID}/module/${moduleID}/live-class/${liveclassID}`,
         });
 
         window.location.href = liveclass?.content.liveClass?.joinURL || "/";
