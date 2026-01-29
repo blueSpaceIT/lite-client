@@ -1,0 +1,38 @@
+@layer theme, base, antd, components, utilities;
+
+@import "tailwindcss";
+
+@theme {
+    --font-siliguri: "Hind Siliguri", "Montserrat", sans-serif;
+    --font-solaimanlipi: "SolaimanLipi", "Montserrat", sans-serif;
+
+    --color-primary: #20b257;
+    --color-secondary: #3f0076;
+    --color-header: #ffffff; 
+    --color-background: #f5fff9;
+    --color-switch: #c5fdde;
+    --color-text: #2d2d2d;
+    --color-text-light: #404040;
+}
+
+body {
+    font-family: var(--font-solaimanlipi);
+}
+
+tbody tr td {
+    text-align: center;
+}
+
+thead tr th {
+    color: var(--color-primary);
+}
+
+thead tr th,
+tbody tr td {
+    padding: 0.25rem 0.75rem;
+}
+
+thead tr th,
+tbody tr:nth-child(even) td {
+    background: #f2f1f1;
+}

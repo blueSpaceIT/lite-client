@@ -1,0 +1,9 @@
+.plyr__control--overlaid {
+    background: #ffffff;
+    color: #c30a0a;
+}
+
+.plyr--video .plyr__control:hover {
+    background: #ffffff;
+    color: #c30a0a;
+}
