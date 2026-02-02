@@ -59,7 +59,7 @@ const Login = () => {
                 <div>
                     <div className="text-center mb-8">
                         <div className="size-20 rounded-full mx-auto mb-4">
-                            <img src={"/favicon.png"} alt="" />
+                            <img src={"/Logo.png"} alt="" />
                         </div>
                         <h1 className="text-2xl font-bold ">
                             Lite Edu Career
