@@ -49,7 +49,7 @@ const ForgotPassword = () => {
                             <img src={"/favicon.png"} alt="" />
                         </div>
                         <h1 className="text-2xl font-bold text-gray-800">
-                            Oditi Career
+                            Lite Edu Career
                         </h1>
                     </div>
 

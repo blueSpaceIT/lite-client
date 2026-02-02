@@ -3,40 +3,51 @@ import "plyr-react/plyr.css";
 import "./VideoPlayer.css";
 
 const VideoPlayer = ({
-    videoID,
-    posterPic,
+  videoID,
+  posterPic,
 }: {
-    videoID: string;
-    posterPic?: string;
+  videoID: string;
+  posterPic?: string;
 }) => {
-    const videoSrc: PlyrSource = {
+  // If it's a relative video path (starts with /uploads), prepend your server URL
+  const isExternalVideo = videoID.startsWith("/uploads");
+  const videoSrc: PlyrSource = isExternalVideo
+    ? {
         type: "video",
         sources: [
-            {
-                src: videoID,
-                provider: "youtube",
-            },
+          {
+            src: `https://api.liteedu.com${videoID}`, // full URL
+            type: "video/mp4",
+          },
         ],
-    };
-    if (posterPic) {
-        videoSrc.poster = posterPic;
-    }
+        poster: posterPic,
+      }
+    : {
+        type: "video",
+        sources: [
+          {
+            src: videoID, // YouTube URL
+            provider: "youtube",
+          },
+        ],
+        poster: posterPic,
+      };
 
-    const options: PlyrOptions = {
-        youtube: {
-            modestbranding: 1,
-            rel: 0,
-            showinfo: 0,
-            iv_load_policy: 3,
-            fs: 0,
-        },
-    };
+  const options: PlyrOptions = {
+    youtube: {
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      iv_load_policy: 3,
+      fs: 0,
+    },
+  };
 
-    return (
-        <div className="w-full">
-            <Plyr source={videoSrc} options={options} />
-        </div>
-    );
+  return (
+    <div className="w-full">
+      <Plyr source={videoSrc} options={options} />
+    </div>
+  );
 };
 
 export default VideoPlayer;

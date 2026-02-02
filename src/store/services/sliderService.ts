@@ -3,9 +3,9 @@ import { baseApi } from "../api/baseApi";
 export const sliderService = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getSlider: builder.query({
-            query: (id) => {
+            query: () => {
                 return {
-                    url: `/sliders/${id}`,
+                    url: `/sliders`,
                     method: "GET",
                 };
             },

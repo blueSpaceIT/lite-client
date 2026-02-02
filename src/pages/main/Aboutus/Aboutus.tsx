@@ -6,7 +6,7 @@ const Aboutus = () => {
             <div className="relative bg-gradient-to-r from-[#753A88] to-[#1D2671] py-5 lg:py-10">
                 <div className="flex justify-center items-center">
                     <div className="text-white lg:text-2xl border-2 border-white rounded-xl font-siliguri px-4 py-2">
-                        আমাদের সম্পর্কে
+                        Our Story
                     </div>
                 </div>
                 <div className="flex justify-center items-center">
@@ -16,8 +16,8 @@ const Aboutus = () => {
                             alt=""
                             className="absolute top-0 right-0"
                         />
-                        প্রতিযোগিতামূলক চাকরি পরীক্ষার প্রস্তুতির জন্য দেশের
-                        সর্বপ্রথম ও সর্ববৃহৎ অনলাইন প্লাটফর্ম "ওদিতি"
+                       
+                        
                     </div>
                 </div>
 

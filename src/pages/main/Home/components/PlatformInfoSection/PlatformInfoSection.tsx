@@ -32,7 +32,7 @@ const PlatformInfoSection = () => {
         <div className="bg-gradient-to-r from-[#090913]  to-[#0d0d15] py-8 my-5 text-white">
             <Container>
                 <h2 className="text-xl lg:text-3xl font-medium text-center mb-3">
-                    ODITI Career: A Trusted Platform for Job Seekers
+                    Lide Edu: A Trusted Platform for Job Seekers
                 </h2>
                 <p className="text-center text-sm lg:text-lg mb-8">
                     Service is our motto; success is its by-product

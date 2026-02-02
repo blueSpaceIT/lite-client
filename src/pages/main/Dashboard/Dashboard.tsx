@@ -56,22 +56,22 @@ const Dashboard = () => {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-6">
                                 <DashboardWidgetCard
                                     key={1}
-                                    text="কোর্স সমূহ"
+                                    text="Courses"
                                     number={widgetCount?.courses || 0}
                                 />
                                 <DashboardWidgetCard
                                     key={2}
-                                    text="পরীক্ষা সমূহ"
+                                    text="Exams"
                                     number={widgetCount?.exams || 0}
                                 />
                                 <DashboardWidgetCard
                                     key={3}
-                                    text="অর্ডার সমূহ"
+                                    text="Orders"
                                     number={widgetCount?.orders || 0}
                                 />
                                 <DashboardWidgetCard
                                     key={4}
-                                    text="ই-বুক সমূহ"
+                                    text="E-books"
                                     number={widgetCount?.ebooks || 0}
                                 />
                             </div>

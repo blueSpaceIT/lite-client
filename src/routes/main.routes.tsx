@@ -37,214 +37,210 @@ import TodayOditi from "../pages/main/TodayOditi/TodayOditi";
 import ProtectedRoute from "./ProtectedRoute";
 
 export const mainRoutes = [
-    {
-        path: "/",
-        element: <MainLayout />,
-        children: [
-            {
-                path: "",
-                element: <Home />,
-            },
-            {
-                path: "upload-image",
-                element: <MultiImage />,
-            },
-            {
-                path: "about-us",
-                element: (
-                    <h1 className="py-10 text-xl text-center">
-                        No content available
-                    </h1>
-                ),
-            },
-            {
-                path: "articles",
-                element: <Articles />,
-            },
-            {
-                path: "branches",
-                element: <Branches />,
-            },
-            {
-                path: "article/:articleID",
-                element: <ArticlesView />,
-            },
-            {
-                path: "checkout",
-                element: <Checkout />,
-            },
-            {
-                path: "courses",
-                element: <Courses />,
-            },
-            {
-                path: "free-courses",
-                element: <CoursesFree />,
-            },
-            {
-                path: "course/:courseID",
-                element: <CoursesView />,
-            },
-            {
-                path: "dashboard",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <Dashboard />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "answers/:courseID/exam/:examID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <ExamAnswers />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-course/:courseID/module/:moduleID/exam/:examID/attempt",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <ExamAttempt />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-course/:courseID/module/:moduleID/exam/:examID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <ExamView />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "gallery",
-                element: <Gallery />,
-            },
-            {
-                path: "leaderboard/:courseID/exam/:examID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <Leaderboard />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-course/:courseID/module/:moduleID/lecture/:lectureID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <LecturesView />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-course/:courseID/module/:moduleID/live-class/:liveclassID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <LiveclassView />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-courses",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <MyCourses />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-course/:courseID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <MyCoursesView />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-ebooks",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <MyEbooks />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "my-orders",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <MyOrders />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "news",
-                element: <News />,
-            },
-            {
-                path: "news/:newsID",
-                element: <NewsView />,
-            },
-            {
-                path: "my-course/:courseID/module/:moduleID/note/:noteID",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <NotesView />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "order/success",
-                element: <OrderSuccess />,
-            },
-            {
-                path: "product/:productID",
-                element: <Product />,
-            },
-            {
-                path: "profile",
-                element: (
-                    <ProtectedRoute userRoles={[USER_ROLES.student]}>
-                        <Profile />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "course/:courseID/purchase",
-                element: <Purchase />,
-            },
-            {
-                path: "reviews",
-                element: <Reviews />,
-            },
-            {
-                path: "shop",
-                element: <Shop />,
-            },
-            {
-                path: "sslcommerz/:type",
-                element: <SSLCommerz />,
-            },
-            {
-                path: "team",
-                element: <TeamOditi />,
-            },
-            {
-                path: "terms-conditions",
-                element: <TermsConditions />,
-            },
-            {
-                path: "today-oditi",
-                element: <TodayOditi />,
-            },
-            {
-                path: "why-oditi",
-                element: (
-                    <h1 className="py-10 text-xl text-center">
-                        No content available
-                    </h1>
-                ),
-            },
-        ],
-    },
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "upload-image",
+        element: <MultiImage />,
+      },
+      {
+        path: "about-us",
+        element: (
+          <h1 className="py-10 text-xl text-center">No content available</h1>
+        ),
+      },
+      {
+        path: "articles",
+        element: <Articles />,
+      },
+      {
+        path: "branches",
+        element: <Branches />,
+      },
+      {
+        path: "article/:articleID",
+        element: <ArticlesView />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "courses",
+        element: <Courses />,
+      },
+      {
+        path: "free-courses",
+        element: <CoursesFree />,
+      },
+      {
+        path: "course/:courseID",
+        element: <CoursesView />,
+      },
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "answers/:courseID/exam/:examID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <ExamAnswers />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-course/:courseID/module/:moduleID/exam/:examID/attempt",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <ExamAttempt />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-course/:courseID/module/:moduleID/exam/:examID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <ExamView />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "gallery",
+        element: <Gallery />,
+      },
+      {
+        path: "leaderboard/:courseID/exam/:examID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <Leaderboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-course/:courseID/module/:moduleID/lecture/:lectureID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <LecturesView />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-course/:courseID/module/:moduleID/live-class/:liveclassID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <LiveclassView />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-courses",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <MyCourses />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-course/:courseID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <MyCoursesView />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-ebooks",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <MyEbooks />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-orders",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <MyOrders />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "news",
+        element: <News />,
+      },
+      {
+        path: "news/:newsID",
+        element: <NewsView />,
+      },
+      {
+        path: "my-course/:courseID/module/:moduleID/note/:noteID",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <NotesView />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "order/success",
+        element: <OrderSuccess />,
+      },
+      {
+        path: "product/:productID",
+        element: <Product />,
+      },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute userRoles={[USER_ROLES.student]}>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "course/:courseID/purchase",
+        element: <Purchase />,
+      },
+      {
+        path: "reviews",
+        element: <Reviews />,
+      },
+      {
+        path: "shop",
+        element: <Shop />,
+      },
+      {
+        path: "sslcommerz/:type",
+        element: <SSLCommerz />,
+      },
+      {
+        path: "team",
+        element: <TeamOditi />,
+      },
+      {
+        path: "terms-conditions",
+        element: <TermsConditions />,
+      },
+      {
+        path: "today-oditi",
+        element: <TodayOditi />,
+      },
+      {
+        path: "why-oditi",
+        element: (
+          <h1 className="py-10 text-xl text-center">No content available</h1>
+        ),
+      },
+    ],
+  },
 ];

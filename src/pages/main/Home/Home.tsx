@@ -1,3 +1,4 @@
+import BannerSection from "./components/BannerSection/BannerSection";
 import CategorySection from "./components/CategorySection/CategorySection";
 import CourseSection from "./components/CourseSection/CourseSection";
 import FamilySection from "./components/FamilySection/FamilySection";
@@ -8,7 +9,7 @@ import VideoSection from "./components/VideoSection/VideoSection";
 const Home = () => {
     return (
         <div className="pt-2 pb-5 bg-gradient-to-r from-[#090913]  to-[#0d0d15]">
-            {/* <BannerSection bannerID="slider" /> */}
+            <BannerSection bannerID="slider" />
             {/* <MarqueeSection /> */}
             <CategorySection />
             <CourseSection />

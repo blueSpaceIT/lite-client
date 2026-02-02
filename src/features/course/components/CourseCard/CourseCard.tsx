@@ -30,7 +30,7 @@ const CourseCard = ({ course }: { course: TCourse }) => {
             {discountPercent > 0 && (
                 <div className="absolute top-3 left-3 z-10">
                     <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
-                        {discountPercent}% ছাড়
+                        {discountPercent}% OFF
                     </span>
                 </div>
             )}
@@ -86,7 +86,7 @@ const CourseCard = ({ course }: { course: TCourse }) => {
                         {course?.price === 0 ? (
                             <div className="text-left">
                                 <p className="text-lg lg:text-xl font-bold text-green-600 animate-pulse">
-                                    ফ্রি
+                                    Free
                                 </p>
                             </div>
                         ) : course?.offerPrice && course.offerPrice > 0 ? (
@@ -111,7 +111,7 @@ const CourseCard = ({ course }: { course: TCourse }) => {
                     <div className="flex items-center gap-2">
                         <Link to={`/course/${course?.id}`}>
                             <button className="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300 flex items-center gap-2 text-sm cursor-pointer">
-                                <FaPlayCircle /> বিস্তারিত
+                                <FaPlayCircle /> Details
                             </button>
                         </Link>
                     </div>

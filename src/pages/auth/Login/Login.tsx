@@ -62,7 +62,7 @@ const Login = () => {
                             <img src={"/favicon.png"} alt="" />
                         </div>
                         <h1 className="text-2xl font-bold ">
-                            Oditi Career
+                            Lite Edu Career
                         </h1>
                         <p className="text-gray-600 mt-2">
                             Login into your account

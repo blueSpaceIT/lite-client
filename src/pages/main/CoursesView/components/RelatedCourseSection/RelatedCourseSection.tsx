@@ -12,9 +12,9 @@ const RelatedCourseSection = ({
     courses: TCourse[];
 }) => {
     return (
-        <div className="bg-[#F5FFF9] py-6 my-5">
+        <div className="bg-gradient-to-r from-[#090913] to-[#0d0d15] py-6 my-5">
             <Container>
-                <TitleCardOne text="আপনার জন্য আরও কিছু কোর্স" />
+                <TitleCardOne text="Courses For You" />
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-8 xl:gap-10 mb-6">
                     {courses.slice(0, 3).map((course) => (
@@ -24,7 +24,7 @@ const RelatedCourseSection = ({
 
                 <LinkBtn
                     to={`/courses?category=${categoryID}`}
-                    text="আরও দেখুন"
+                    text="See More"
                 />
             </Container>
         </div>

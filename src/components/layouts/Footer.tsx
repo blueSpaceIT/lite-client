@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "/logo-white.png";
+import logo from "/Logo.png";
 import { Button } from "antd";
 import {
     FaFacebookF,
