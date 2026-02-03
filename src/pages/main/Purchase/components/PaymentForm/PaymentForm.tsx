@@ -71,9 +71,10 @@ const PaymentForm = ({ purchaseData }: Props) => {
                     email: data.email,
                     address: "Dhaka",
                     type: "purchase",
-                    callbackURL: `${
-                        import.meta.env.VITE_FRONTEND_URL
-                    }/paystation/purchase`, // Adjust based on backend callback handling
+                    // callbackURL: `${
+                    //     import.meta.env.VITE_FRONTEND_URL
+                    // }/paystation/purchase`, 
+                    callbackURL: "https://liteedu.com/paystation/purchase", 
                 };
 
                 const payResult = await createPayment(paymentData);
