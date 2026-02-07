@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { paystationServics } from "../../store/services/paystationService";
@@ -10,74 +9,54 @@ export default function PaymentVerify() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const invoice = searchParams.get("invoice");
+  const invoice = searchParams.get("invoice"); // FIX
+  const trxId = searchParams.get("trx_id");
+  const redirectStatus = searchParams.get("status");
 
   const [verifyPayment] = paystationServics.useVerifyPaymentMutation();
 
   const [status, setStatus] = useState<Status>("loading");
-  const [message, setMessage] = useState<string>("Verifying payment...");
+  const [message, setMessage] = useState("Verifying payment...");
 
   useEffect(() => {
     if (!invoice || !type) {
       setStatus("error");
-      setMessage("Missing payment information");
+      setMessage("Invalid payment data");
       return;
     }
 
-    handleVerify();
+    if (redirectStatus === "FAILED") {
+      setStatus("error");
+      setMessage("Payment failed");
+      return;
+    }
+
+    verify();
   }, [invoice, type]);
 
-  const handleVerify = async () => {
+  const verify = async () => {
     try {
       const res = await verifyPayment({
-        invoice,
-        type,
+        invoice_number: invoice,
       }).unwrap();
 
-      if (res.success) {
-        setStatus("success");
-        setMessage("Payment verified successfully");
+      setStatus("success");
+      setMessage("Payment verified successfully");
 
-        setTimeout(() => {
-          navigate(type === "order" ? "/orders" : "/dashboard");
-        }, 4000);
-      } else {
-        throw new Error(res.message);
-      }
+      setTimeout(() => {
+        navigate(type === "order" ? "/orders" : "/my-courses");
+      }, 3000);
     } catch (err: any) {
       setStatus("error");
-      setMessage(
-        err?.data?.message || err?.message || "Payment verification failed",
-      );
+      setMessage(err?.data?.message || "Verification failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
-        {status === "loading" && (
-          <>
-            <h2 className="text-xl font-semibold mb-4">🔄 Verifying Payment</h2>
-            <p className="text-gray-600">{message}</p>
-          </>
-        )}
-
-        {status === "success" && (
-          <>
-            <h2 style={{ color: "#16a34a" }}>✅ Payment Successful</h2>
-            <p>{message}</p>
-            <p>You will be redirected shortly...</p>
-          </>
-        )}
-
-        {status === "error" && (
-          <>
-            <h2 style={{ color: "#dc2626" }}>❌ Verification Failed</h2>
-            <p>{message}</p>
-            <button onClick={() => navigate("/")}>Go Home</button>
-          </>
-        )}
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+      {status === "loading" && <h2>Verifying...</h2>}
+      {status === "success" && <h2>Payment Successful</h2>}
+      {status === "error" && <h2>Payment Failed</h2>}
     </div>
   );
 }

@@ -1,144 +1,138 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import type z from "zod";
+
 import Form from "../../../../../components/common/Form/Form";
 import FormButton from "../../../../../components/common/Form/FormButton";
-import InputField from "../../../../../components/common/Form/InputField"; // Assuming this component exists based on the pattern
+import InputField from "../../../../../components/common/Form/InputField";
 import RadioField from "../../../../../components/common/Form/RadioField";
+
 import type { PayStationResolvers } from "../../../../../resolvers/PayStationResolvers";
+
 import { paystationServics } from "../../../../../store/services/paystationService";
 import { purchaseService } from "../../../../../store/services/purchaseService";
-import type {
-    TData,
-    TError,
-    TPurchase,
-    TPurchaseData, // Assuming you've defined this type
-} from "../../../../../types";
-import type { IPayStationInitiateResponse } from "../../../../../types/IPayStationInitiateResponse";
 
+import type { TPurchase, TPurchaseData } from "../../../../../types";
 
 type Props = {
-    purchaseData: TPurchaseData;
+  purchaseData: TPurchaseData;
 };
 
+type TCreatePurchaseFromData = {
+  method: "Free" | "PayStation";
+  email: string;
+};
+
+type TCreatePaymentData = z.infer<
+  typeof PayStationResolvers.PayStationValidationSchema
+>;
+
 const PaymentForm = ({ purchaseData }: Props) => {
-    const navigate = useNavigate();
-    const defaultValues = {
-        method:
-            purchaseData.price === 0
-                ? "Free"
-                : ("PayStation" as "Free" | "PayStation"),
-        email: purchaseData.email || "",
-    };
+  const navigate = useNavigate();
 
-    type TCreatePurchaseFromData = {
-        method: "Free" | "PayStation";
-        email: string;
-    };
+  const defaultValues: TCreatePurchaseFromData = {
+    method: purchaseData.price === 0 ? "Free" : "PayStation",
+    email: purchaseData.email || "",
+  };
 
-    type TCreatePaymentData = z.infer<
-        typeof PayStationResolvers.PayStationValidationSchema
-    >;
+  const [createPurchase] = purchaseService.useCreatePurchaseMutation();
+  const [createPayment] = paystationServics.useCreatePaymentMutation();
 
-    const [createPurchase] = purchaseService.useCreatePurchaseMutation();
-    const [createPayment] = paystationServics.useCreatePaymentMutation();
+  const createPurchaseHandler = async (formData: TCreatePurchaseFromData) => {
+    const toastId = toast.loading("Processing...");
 
-    const createPurchaseHandler = async (data: TCreatePurchaseFromData) => {
-        const toastId = toast.loading("Wait a while");
+    try {
+      // VALIDATION
+      if (formData.method === "PayStation" && !formData.email) {
+        toast.error("Email is required for PayStation", { id: toastId });
+        return;
+      }
 
-        if (data.method === "PayStation" && !data.email) {
-            toast.error("Email is required for PayStation", { id: toastId });
-            return;
-        }
+      // STEP 1 — CREATE PURCHASE
+      const purchaseRes = await createPurchase({
+        ...purchaseData,
+        branch: "online",
+      }).unwrap();
 
-        const result = await createPurchase({
-            ...purchaseData,
-            branch: "online",
-        });
-        if (result?.error) {
-            toast.error((result?.error as TError)?.data?.message, {
-                id: toastId,
-            });
-        }
+      const purchase: TPurchase = purchaseRes.data;
+      console.log(purchase._id)
 
-        if (result?.data as TData<TPurchase>) {
-            if (data.method === "PayStation") {
-                const paymentData: TCreatePaymentData = {
-                    totalAmount: result.data.data.totalAmount,
-                    invoiceID: result.data.data._id,
-                    name: purchaseData.name,
-                    phone: purchaseData.phone,
-                    email: data.email,
-                    address: "Dhaka",
-                    type: "purchase",
-                    // callbackURL: `${
-                    //     import.meta.env.VITE_FRONTEND_URL
-                    // }/paystation/purchase`, 
-                    callbackURL: "https://liteedu.com/paystation/purchase", 
-                };
+      // FREE PURCHASE
+      if (formData.method === "Free") {
+        toast.success("Course activated successfully", { id: toastId });
+        navigate("/my-courses", { replace: true });
+        return;
+      }
 
-                const payResult = await createPayment(paymentData);
-                if (payResult?.error) {
-                    toast.error((payResult?.error as TError)?.data?.message, {
-                        id: toastId,
-                    });
-                }
+      // STEP 2 — CREATE PAYMENT REQUEST
+      const paymentPayload: TCreatePaymentData = {
+        totalAmount: purchase.totalAmount,
+        invoiceID: purchase._id, // IMPORTANT FIX
+        name: purchaseData.name,
+        phone: purchaseData.phone,
+        email: formData.email,
+        address: "Dhaka",
+        type: "purchase",
+        callbackURL: `${import.meta.env.VITE_BACKEND_URL}/payment/callback`,
+      };
 
-                if (payResult?.data as TData<IPayStationInitiateResponse>) {
-                    const paymentURL = payResult.data.data.payment_url;
-                    toast.success("Redirecting to payment gateway...", {
-                        id: toastId,
-                    });
-                    window.location.href = paymentURL;
-                }
-            } else {
-                toast.success("Course purchase successfully", {
-                    id: toastId,
-                });
-                navigate("/my-courses", { replace: true });
-            }
-        }
-    };
+      const paymentRes = await createPayment(paymentPayload).unwrap();
 
-    return (
-        <div>
-            <Form<TCreatePurchaseFromData>
-                onSubmit={createPurchaseHandler}
-                defaultValues={defaultValues}
-            >
-                <div className="grid gap-5">
-                    <div>
-                        <RadioField
-                            name="method"
-                            label="Payment Method"
-                            options={[
-                                defaultValues.method === "Free"
-                                    ? { value: "Free", label: "Free" }
-                                    : {
-                                          value: "PayStation",
-                                          label: "PayStation",
-                                      },
-                            ]}
-                        />
-                    </div>
-                    {defaultValues.method !== "Free" && (
-                        <div>
-                            <InputField
-                                name="email"
-                                label="Email"
-                                placeholder="Enter your email"
-                            />
-                        </div>
-                    )}
-                    <FormButton>
-                        {defaultValues.method === "Free"
-                            ? "Get Now"
-                            : "Pay Now"}
-                    </FormButton>
-                </div>
-            </Form>
+      const paymentURL = paymentRes.data?.payment_url;
+
+      if (!paymentURL) {
+        throw new Error("Payment URL not received");
+      }
+
+      toast.success("Redirecting to payment gateway...", { id: toastId });
+
+      // REDIRECT
+      window.location.href = paymentURL;
+    } catch (error: any) {
+      console.error("Payment Error:", error);
+      toast.error(
+        error?.data?.message || error?.message || "Something went wrong",
+        { id: toastId },
+      );
+    }
+  };
+
+  return (
+    <div>
+      <Form<TCreatePurchaseFromData>
+        onSubmit={createPurchaseHandler}
+        defaultValues={defaultValues}
+      >
+        <div className="grid gap-5">
+          {/* PAYMENT METHOD */}
+          <RadioField
+            name="method"
+            label="Payment Method"
+            options={[
+              purchaseData.price === 0
+                ? { value: "Free", label: "Free" }
+                : { value: "PayStation", label: "PayStation" },
+            ]}
+          />
+
+          {/* EMAIL FIELD */}
+          {purchaseData.price !== 0 && (
+            <InputField
+              name="email"
+              label="Email"
+              placeholder="Enter your email"
+            />
+          )}
+
+          {/* SUBMIT BUTTON */}
+          <FormButton>
+            {purchaseData.price === 0 ? "Get Now" : "Pay Now"}
+          </FormButton>
         </div>
-    );
+      </Form>
+    </div>
+  );
 };
 
 export default PaymentForm;
