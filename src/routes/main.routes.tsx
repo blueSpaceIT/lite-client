@@ -1,4 +1,5 @@
 import MainLayout from "../components/layouts/MainLayout";
+import PaymentVerify from "../components/PaymentVerify/PaymentVerify";
 import { USER_ROLES } from "../constants";
 import Articles from "../pages/main/Articles/Articles";
 import ArticlesView from "../pages/main/ArticlesView/ArticlesView";
@@ -223,6 +224,10 @@ export const mainRoutes = [
         path: "sslcommerz/:type",
         element: <SSLCommerz />,
       },
+      {
+  path: "paystation/:type/:type2",
+  element: <PaymentVerify />,
+},
       {
         path: "team",
         element: <TeamOditi />,

@@ -1,15 +1,22 @@
-import { Button } from "@headlessui/react";
-import type { ReactNode } from "react";
+import React from "react";
 
-const FormButton = ({ children }: { children: ReactNode }) => {
-    return (
-        <Button
-            type="submit"
-            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm text-white cursor-pointer"
-        >
-            {children}
-        </Button>
-    );
+type Props = {
+  children: React.ReactNode;
+  disabled?: boolean;
+};
+
+const FormButton = ({ children, disabled = false }: Props) => {
+  return (
+    <button
+      type="submit"
+      disabled={disabled}
+      className={`px-4 py-2 rounded
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+      `}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default FormButton;
