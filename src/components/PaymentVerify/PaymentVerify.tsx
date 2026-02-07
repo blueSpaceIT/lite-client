@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { paystationServics } from "../../store/services/paystationService";
@@ -10,13 +11,12 @@ export default function PaymentVerify() {
   const navigate = useNavigate();
 
   const invoice = searchParams.get("invoice"); // FIX
-  const trxId = searchParams.get("trx_id");
   const redirectStatus = searchParams.get("status");
 
   const [verifyPayment] = paystationServics.useVerifyPaymentMutation();
 
   const [status, setStatus] = useState<Status>("loading");
-  const [message, setMessage] = useState("Verifying payment...");
+  const [, setMessage] = useState("Verifying payment...");
 
   useEffect(() => {
     if (!invoice || !type) {
@@ -36,7 +36,7 @@ export default function PaymentVerify() {
 
   const verify = async () => {
     try {
-      const res = await verifyPayment({
+       await verifyPayment({
         invoice_number: invoice,
       }).unwrap();
 
