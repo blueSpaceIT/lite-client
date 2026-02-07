@@ -1,4 +1,3 @@
-import { useWatch } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import type z from "zod";
@@ -43,8 +42,6 @@ const PaymentForm = ({ purchaseData }: Props) => {
 
     const [createPurchase] = purchaseService.useCreatePurchaseMutation();
     const [createPayment] = paystationServics.useCreatePaymentMutation();
-    const method = useWatch({ name: "method" });
-    const email = useWatch({ name: "email" });
 
     const createPurchaseHandler = async (data: TCreatePurchaseFromData) => {
         const toastId = toast.loading("Wait a while");
@@ -77,7 +74,7 @@ const PaymentForm = ({ purchaseData }: Props) => {
                     // callbackURL: `${
                     //     import.meta.env.VITE_FRONTEND_URL
                     // }/paystation/purchase`, 
-                    callbackURL: "https://liteedu.com/paystation/purchase",
+                    callbackURL: "https://liteedu.com/paystation/purchase", 
                 };
 
                 const payResult = await createPayment(paymentData);
@@ -110,30 +107,36 @@ const PaymentForm = ({ purchaseData }: Props) => {
                 defaultValues={defaultValues}
             >
                 <div className="grid gap-5">
-                    <RadioField
-                        name="method"
-                        label="Payment Method"
-                        options={[
-                            defaultValues.method === "Free"
-                                ? { value: "Free", label: "Free" }
-                                : { value: "PayStation", label: "PayStation" },
-                        ]}
-                    />
-
-                    {method === "PayStation" && (
-                        <InputField
-                            name="email"
-                            label="Email"
-                            placeholder="Enter your email"
+                    <div>
+                        <RadioField
+                            name="method"
+                            label="Payment Method"
+                            options={[
+                                defaultValues.method === "Free"
+                                    ? { value: "Free", label: "Free" }
+                                    : {
+                                          value: "PayStation",
+                                          label: "PayStation",
+                                      },
+                            ]}
                         />
+                    </div>
+                    {defaultValues.method !== "Free" && (
+                        <div>
+                            <InputField
+                                name="email"
+                                label="Email"
+                                placeholder="Enter your email"
+                            />
+                        </div>
                     )}
-
-                    <FormButton disabled={method === "PayStation" && !email}>
-                        {method === "Free" ? "Get Now" : "Pay Now"}
+                    <FormButton>
+                        {defaultValues.method === "Free"
+                            ? "Get Now"
+                            : "Pay Now"}
                     </FormButton>
                 </div>
             </Form>
-
         </div>
     );
 };
