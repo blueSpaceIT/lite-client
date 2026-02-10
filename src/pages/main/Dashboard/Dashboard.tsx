@@ -1,12 +1,13 @@
+import { useEffect, useState } from "react";
 import { FaWallet } from "react-icons/fa6";
 import Container from "../../../components/common/Container/Container";
 import MainContent from "../../../components/layouts/MainContent";
 import Sidebar from "../../../components/layouts/Sidebar";
-import { useEffect, useState } from "react";
-import { dashboardService } from "../../../store/services/dashboarService";
-import type { TDashboard } from "../../../types";
 import { useAppSelector } from "../../../store/hook";
+import { dashboardService } from "../../../store/services/dashboarService";
+import { offlineEnrollmentService } from "../../../store/services/offlineEnrollmentService";
 import { useCurrentUser } from "../../../store/slices/authSlice";
+import type { IOfflineEnrollment, TDashboard } from "../../../types";
 
 const DashboardWidgetCard = ({
     text,
@@ -35,11 +36,20 @@ const Dashboard = () => {
     const { data, isSuccess } =
         dashboardService.useGetDashboardWidgetCountingQuery(undefined);
 
+    const { data: offlineData } =
+        offlineEnrollmentService.useGetStudentOfflineEnrollmentsQuery(
+            user?.id as string,
+            { skip: !user?.id }
+        );
+
     useEffect(() => {
         if (isSuccess && data) {
             setWidgetCount(data?.data);
         }
     }, [data, isSuccess]);
+    const activeEnrollment = offlineData?.data?.find(
+        (enrollment: IOfflineEnrollment) => enrollment.status === "Active"
+    );
 
     return (
         <div className="py-6 md:py-10 bg-gradient-to-r from-[#090913] to-[#0d0d15] text-white">
@@ -74,6 +84,26 @@ const Dashboard = () => {
                                     text="E-books"
                                     number={widgetCount?.ebooks || 0}
                                 />
+
+                                {activeEnrollment && (
+                                    <>
+                                        <DashboardWidgetCard
+                                            key={5}
+                                            text="Course Fee"
+                                            number={activeEnrollment.courseFee}
+                                        />
+                                        <DashboardWidgetCard
+                                            key={6}
+                                            text="Paid Amount"
+                                            number={activeEnrollment.paidAmount}
+                                        />
+                                        <DashboardWidgetCard
+                                            key={7}
+                                            text="Due Amount"
+                                            number={activeEnrollment.dueAmount}
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </MainContent>

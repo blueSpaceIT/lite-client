@@ -16,6 +16,7 @@ export * from "./media.types";
 export * from "./module.types";
 export * from "./news.types";
 export * from "./newsCategory.types";
+export * from "./offlineEnrollment.types";
 export * from "./order.types";
 export * from "./product.types";
 export * from "./productCategory.types";
@@ -26,3 +27,4 @@ export * from "./slider.types";
 export * from "./sslcommerz.types";
 export * from "./tag.types";
 export * from "./user.types";
+
