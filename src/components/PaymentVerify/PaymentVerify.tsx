@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -18,7 +20,7 @@ export default function PaymentVerify() {
   const [verifyPayment] = paystationServics.useVerifyPaymentMutation();
 
   const [status, setStatus] = useState<Status>("loading");
-  const [message, setMessage] = useState("Verifying payment...");
+  const [, setMessage] = useState("Verifying payment...");
 
   useEffect(() => {
     if (!invoice || !type) {
@@ -48,7 +50,7 @@ export default function PaymentVerify() {
       setMessage("Payment verified successfully");
 
       // setTimeout(() => {
-        navigate(type === "order" ? "/orders" : "/my-courses");
+      navigate(type === "order" ? "/orders" : "/my-courses");
       // }, 3000);
     } catch (err: any) {
       setStatus("error");
