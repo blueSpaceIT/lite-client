@@ -17,6 +17,7 @@ const LecturesView = () => {
     const [course, setCourse] = useState<
         (TCourse & { contents: TCourseCurriculum[] }) | null
     >(null);
+    console.log(courseID,moduleID,lectureID)
     const [lecture, setLecture] = useState<TCourseContent | null>(null);
     const { data, isSuccess } =
         courseContentService.useGetPurchasedCourseCurriculumQuery(courseID);
@@ -44,25 +45,33 @@ const LecturesView = () => {
 
     const server = lecture?.content?.lecture?.server;
     const videoID = lecture?.content?.lecture?.video as string;
-
+    console.log(lecture)
+    console.log(videoID)
     return (
         <div className="pt-4 pb-5">
             <Container>
                 {course ? (
                     <div>
                         <div className="grid md:grid-cols-3 gap-3">
-                            <div className="md:col-span-2">
+                            
+                            <div className="md:col-span-2 ">
                                 {server === "YouTube" && (
                                     <VideoPlayer videoID={videoID} />
+                                        
                                 )}
 
                                 {server === "Bunny" && (
                                     <BunnyPlayer videoID={videoID} />
                                 )}
+                                {
+                                    server === "Other" && (
+                                        <VideoPlayer videoID={videoID} />
+                                        
+                                    )   
+                                }
 
                                 {!server && "Loading..."}
                             </div>
-
                             <div>
                                 <Curriculum
                                     courseID={course.id}

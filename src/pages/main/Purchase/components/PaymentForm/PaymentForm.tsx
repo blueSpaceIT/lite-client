@@ -74,7 +74,7 @@ const PaymentForm = ({ purchaseData }: Props) => {
         email: formData.email,
         address: "Dhaka",
         type: "purchase",
-        callbackURL: `${import.meta.env.VITE_BACKEND_URL}/payment/callback`,
+        callbackURL: `${import.meta.env.VITE_FRONTEND_URL}/payment/callback`,
       };
 
       const paymentRes = await createPayment(paymentPayload).unwrap();

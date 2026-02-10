@@ -14,7 +14,7 @@ export type TLiveClass = {
 
 export type TLecture = {
     title: string;
-    server: "YouTube" | "Vimeo" | "Bunny";
+    server: "YouTube" | "Vimeo" | "Bunny" | "Other";
     video: string;
     duration: {
         hours: number;

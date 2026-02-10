@@ -225,7 +225,7 @@ export const mainRoutes = [
         element: <SSLCommerz />,
       },
       {
-  path: "paystation/:type/:type2",
+  path: "payment/callback/:type",
   element: <PaymentVerify />,
 },
       {
