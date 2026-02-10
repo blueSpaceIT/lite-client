@@ -16,7 +16,7 @@ const VideoPlayer = ({
         type: "video",
         sources: [
           {
-            src: `https://api.liteedu.com${videoID}`, // full URL
+            src: `https://api.liteedu.com${videoID}`, 
             type: "video/mp4",
           },
         ],
@@ -41,6 +41,7 @@ const VideoPlayer = ({
       iv_load_policy: 3,
       fs: 0,
     },
+
   };
 
   return (

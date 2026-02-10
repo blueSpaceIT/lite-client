@@ -42,7 +42,7 @@ const NotesView = () => {
     if (noteError) {
         return <Navigate to={`/course/${courseID}/purchase`} replace />;
     }
-
+console.log(course)
     return (
         <div className="pt-4 pb-5">
             <Container>

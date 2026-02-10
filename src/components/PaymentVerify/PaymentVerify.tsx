@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { paystationServics } from "../../store/services/paystationService";
@@ -9,9 +10,10 @@ export default function PaymentVerify() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const invoice = searchParams.get("invoice"); // FIX
+  const invoice = searchParams.get("invoice_number"); // FIX
   const trxId = searchParams.get("trx_id");
   const redirectStatus = searchParams.get("status");
+  console.log(trxId);
 
   const [verifyPayment] = paystationServics.useVerifyPaymentMutation();
 
@@ -38,14 +40,16 @@ export default function PaymentVerify() {
     try {
       const res = await verifyPayment({
         invoice_number: invoice,
+        trx_id: trxId || undefined,
       }).unwrap();
+      console.log(res);
 
       setStatus("success");
       setMessage("Payment verified successfully");
 
-      setTimeout(() => {
+      // setTimeout(() => {
         navigate(type === "order" ? "/orders" : "/my-courses");
-      }, 3000);
+      // }, 3000);
     } catch (err: any) {
       setStatus("error");
       setMessage(err?.data?.message || "Verification failed");
