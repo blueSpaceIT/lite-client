@@ -26,9 +26,11 @@ import News from "../pages/main/News/News";
 import NewsView from "../pages/main/NewsView/NewsView";
 import NotesView from "../pages/main/NotesView/NotesView";
 import OrderSuccess from "../pages/main/OrderSuccess/OrderSuccess";
+import PrivacyPolicy from "../pages/main/PrivacyPolicy/PrivacyPolicy";
 import Product from "../pages/main/Product/Product";
 import Profile from "../pages/main/Profile/Profile";
 import Purchase from "../pages/main/Purchase/Purchase";
+import RefundPolicy from "../pages/main/RefundPolicy/RefundPolicy";
 import Reviews from "../pages/main/Reviews/Reviews";
 import Shop from "../pages/main/Shop/Shop";
 import SSLCommerz from "../pages/main/SSLCommerz/SSLCommerz";
@@ -209,8 +211,16 @@ export const mainRoutes = [
         ),
       },
       {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
         path: "course/:courseID/purchase",
         element: <Purchase />,
+      },
+      {
+        path: "refund-policy",
+        element: <RefundPolicy />,
       },
       {
         path: "reviews",
@@ -225,9 +235,9 @@ export const mainRoutes = [
         element: <SSLCommerz />,
       },
       {
-  path: "payment/callback/:type",
-  element: <PaymentVerify />,
-},
+        path: "payment/callback/:type",
+        element: <PaymentVerify />,
+      },
       {
         path: "team",
         element: <TeamOditi />,
