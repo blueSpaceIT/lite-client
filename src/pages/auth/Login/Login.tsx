@@ -62,7 +62,7 @@ const Login = () => {
                             <img src={"/Logo.png"} alt="" />
                         </div>
                         <h1 className="text-2xl font-bold ">
-                            Lite Edu Career
+                            Lite Edu 
                         </h1>
                         <p className="text-gray-600 mt-2">
                             Login into your account

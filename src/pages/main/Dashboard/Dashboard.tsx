@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { FaWallet } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import Container from "../../../components/common/Container/Container";
 import MainContent from "../../../components/layouts/MainContent";
 import Sidebar from "../../../components/layouts/Sidebar";
 import { useAppSelector } from "../../../store/hook";
 import { dashboardService } from "../../../store/services/dashboarService";
+import { offlineBatchService } from "../../../store/services/offlineBatchService";
+import { offlineClassService } from "../../../store/services/offlineClassService";
 import { offlineEnrollmentService } from "../../../store/services/offlineEnrollmentService";
 import { purchaseService } from "../../../store/services/purchaseService";
 import { useCurrentUser } from "../../../store/slices/authSlice";
@@ -48,6 +51,9 @@ const Dashboard = () => {
     const { data: onlineData, isSuccess: onlineSuccess } =
         purchaseService.useGetMyPurchasesQuery(undefined);
 
+    const { data: classesData } = offlineClassService.useGetOfflineClassesQuery();
+    const { data: batchesData } = offlineBatchService.useGetOfflineBatchesQuery();
+
     useEffect(() => {
         if (isSuccess && data) {
             setWidgetCount(data?.data);
@@ -83,30 +89,36 @@ const Dashboard = () => {
                                 Your ID: {user?.id}
                             </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-6 mb-8">
-                                <DashboardWidgetCard
-                                    key={1}
-                                    text="Courses"
-                                    number={widgetCount?.courses || 0}
-                                />
-                                <DashboardWidgetCard
-                                    key={2}
-                                    text="Exams"
-                                    number={widgetCount?.exams || 0}
-                                />
-                                <DashboardWidgetCard
-                                    key={3}
-                                    text="Orders"
-                                    number={widgetCount?.orders || 0}
-                                />
-                                <DashboardWidgetCard
-                                    key={4}
-                                    text="E-books"
-                                    number={widgetCount?.ebooks || 0}
-                                />
+                            <div className="mb-8">
+                                <h3 className="text-lg font-bold mb-4 border-b border-white/10 pb-2">Online Summary</h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-6">
+                                    <DashboardWidgetCard
+                                        key={1}
+                                        text="Courses"
+                                        number={widgetCount?.courses || 0}
+                                    />
+                                    <DashboardWidgetCard
+                                        key={2}
+                                        text="Exams"
+                                        number={widgetCount?.exams || 0}
+                                    />
+                                    <DashboardWidgetCard
+                                        key={3}
+                                        text="Orders"
+                                        number={widgetCount?.orders || 0}
+                                    />
+                                    <DashboardWidgetCard
+                                        key={4}
+                                        text="E-books"
+                                        number={widgetCount?.ebooks || 0}
+                                    />
+                                </div>
+                            </div>
 
-                                {activeEnrollment && (
-                                    <>
+                            {activeEnrollment && (
+                                <div className="mb-8">
+                                    <h3 className="text-lg font-bold mb-4 border-b border-white/10 pb-2">Offline Summary</h3>
+                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 lg:gap-6">
                                         <DashboardWidgetCard
                                             key={5}
                                             text="Course Fee"
@@ -122,9 +134,9 @@ const Dashboard = () => {
                                             text="Due Amount"
                                             number={activeEnrollment.dueAmount}
                                         />
-                                    </>
-                                )}
-                            </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="grid lg:grid-cols-2 gap-6">
                                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -133,7 +145,9 @@ const Dashboard = () => {
                                         <ul className="space-y-3">
                                             {onlineCourses.map((item) => (
                                                 <li key={item._id} className="flex justify-between items-center bg-white/5 p-3 rounded">
-                                                    <span className="font-medium">{item.course.name}</span>
+                                                    <Link to={`/my-course/${item.course?.id}`} className="hover:text-primary transition-colors">
+                                                        <span className="font-medium">{item.course.name}</span>
+                                                    </Link>
                                                     <span className={`text-xs px-2 py-1 rounded ${item.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
                                                         {item.status}
                                                     </span>
@@ -149,14 +163,28 @@ const Dashboard = () => {
                                     <h3 className="text-lg font-bold mb-4 border-b border-white/10 pb-2">Offline Courses</h3>
                                     {offlineCourses.length > 0 ? (
                                         <ul className="space-y-3">
-                                            {offlineCourses.map((item) => (
-                                                <li key={item._id} className="flex justify-between items-center bg-white/5 p-3 rounded">
-                                                    <span className="font-medium">{item.class?.title || "N/A"}</span>
-                                                    <span className={`text-xs px-2 py-1 rounded ${item.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
-                                                        {item.status}
-                                                    </span>
-                                                </li>
-                                            ))}
+                                            {offlineCourses.map((item) => {
+                                                const classInfo = typeof item.class === "string"
+                                                    ? classesData?.data?.find((c: any) => c._id === item.class)
+                                                    : item.class;
+                                                const batchInfo = typeof item.batch === "string"
+                                                    ? batchesData?.data?.find((b: any) => b._id === item.batch)
+                                                    : item.batch;
+
+                                                return (
+                                                    <li key={item._id} className="flex justify-between items-center bg-white/5 p-3 rounded">
+                                                        <Link to={`/my-course/${classInfo?._id || classInfo?.id}`} className="hover:text-primary transition-colors">
+                                                            <span className="font-medium">
+                                                                {classInfo?.title || "N/A"}
+                                                                {batchInfo?.title ? ` (${batchInfo.title})` : ""}
+                                                            </span>
+                                                        </Link>
+                                                        <span className={`text-xs px-2 py-1 rounded ${item.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                                                            {item.status}
+                                                        </span>
+                                                    </li>
+                                                );
+                                            })}
                                         </ul>
                                     ) : (
                                         <p className="text-slate-400 text-sm italic">No offline courses enrolled</p>

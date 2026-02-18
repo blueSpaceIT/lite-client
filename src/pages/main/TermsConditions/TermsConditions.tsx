@@ -21,11 +21,11 @@ const TermsConditions = () => {
                     <li>
                         General Use
                         <p>
-                            By registering for and using the Lite Edu Career
+                            By registering for and using the Lite Edu 
                             website, applications, or services (collectively,
                             “Services”), you agree to comply with these Terms &
                             Conditions. All content, materials, and intellectual
-                            property on our platform are owned by Lite Edu Career
+                            property on our platform are owned by Lite Edu 
                             and may not be reproduced, modified, or distributed
                             without permission. Users may only access Services
                             for personal, non-commercial purposes.
@@ -72,7 +72,7 @@ const TermsConditions = () => {
                                 <p>
                                     Scheduling of classes, changes in class
                                     timing, topics, or instructors is at the
-                                    sole discretion of Lite Edu Career.
+                                    sole discretion of Lite Edu .
                                 </p>
                             </li>
                             <li>
@@ -134,7 +134,7 @@ const TermsConditions = () => {
                             <li>
                                 <p>
                                     By submitting content to the platform, users
-                                    grant Lite Edu Career a non-exclusive license
+                                    grant Lite Edu  a non-exclusive license
                                     to use, display, or distribute such content
                                     within the platform in accordance with these
                                     Terms.
@@ -159,7 +159,7 @@ const TermsConditions = () => {
                                 <p>
                                     Students under the age of 18 must obtain
                                     parental or guardian consent to use the
-                                    Services. Lite Edu Career is not liable for any
+                                    Services. Lite Edu  is not liable for any
                                     misuse by minors without proper consent.
                                 </p>
                             </li>
@@ -171,7 +171,7 @@ const TermsConditions = () => {
                         <ul className="list-[disc] pl-6">
                             <li>
                                 <p>
-                                    Lite Edu Career provides all Services “as is”
+                                    Lite Edu  provides all Services “as is”
                                     and does not guarantee uninterrupted access
                                     or error-free content.
                                 </p>
@@ -187,7 +187,7 @@ const TermsConditions = () => {
                             </li>
                             <li>
                                 <p>
-                                    Lite Edu Career reserves the right to modify,
+                                    Lite Edu  reserves the right to modify,
                                     suspend, or discontinue any Service,
                                     content, or feature at its discretion
                                     without prior notice.

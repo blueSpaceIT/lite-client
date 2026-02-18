@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import logo from "/Logo.png";
 import { Button } from "antd";
 import {
     FaFacebookF,
@@ -10,6 +8,8 @@ import {
     FaRegEnvelope,
     FaTwitter,
 } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import logo from "/Logo.png";
 
 const Footer = () => {
     return (
@@ -66,9 +66,9 @@ const Footer = () => {
                 <div className="mb-5">
                     <h3 className="font-semibold underline mb-3">About us</h3>
                     <ul className="text-sm leading-7">
-                        {/* <li className="hover:underline">
-                            <Link to={"/career"}>ক্যারিয়ার</Link>
-                        </li> */}
+                        <li className="hover:underline">
+                            <Link to={"/about-us"}>About us</Link>
+                        </li>
                         <li className="hover:underline">
                             <Link to={"/terms-conditions"}>
                                 Terms & Conditions
@@ -80,28 +80,23 @@ const Footer = () => {
                         <li className="hover:underline">
                             <Link to={"/refund-policy"}>Refund Policy</Link>
                         </li>
-                        {/* <li className="hover:underline">
-                            <Link to={"/support"}>অভিযোগ বা পরামর্শ</Link>
-                        </li> */}
                     </ul>
                 </div>
 
                 <div className="mb-5">
-                    <h3 className="font-semibold underline mb-3">Home</h3>
+                    <h3 className="font-semibold underline mb-3">Quick Links</h3>
                     <ul className="text-sm leading-7">
-                        {/* <li className="hover:underline">
-                            <Link to={"/terms-conditions"}>নিয়মাবলী</Link>
-                        </li> */}
                         <li className="hover:underline">
-                            <Link to={"/branches"}>Our Branches</Link>
+                            <Link to={"/courses"}>Our Course</Link>
                         </li>
                         <li className="hover:underline">
-                            <a
-                                href={"https://admin.oditicareer.com"}
-                                target="_blank"
-                            >
-                                Admin Login
-                            </a>
+                            <Link to={"/shop"}>Book Shop</Link>
+                        </li>
+                        <li className="hover:underline">
+                            <Link to={"/free-courses"}>Free Class</Link>
+                        </li>
+                        <li className="hover:underline">
+                            <Link to={"/branches"}>Our Branches</Link>
                         </li>
                     </ul>
                 </div>
@@ -124,9 +119,9 @@ const Footer = () => {
                         <li className="flex items-center gap-2">
                             <FaLocationDot />
                             <a href="https://maps.app.goo.gl/w5T28R1ZBv8Ubbcy7">
-                                 Address : 5/8, Block#D
-                                 Lalmatia, Dhaka-1207
-                                 Bangladesh
+                                Address : 5/8, Block#D
+                                Lalmatia, Dhaka-1207
+                                Bangladesh
                             </a>
                         </li>
                     </ul>
@@ -144,7 +139,7 @@ const Footer = () => {
                         target="_blank"
                         className="text-primary"
                     >
-                        Lite edu 
+                        Lite edu
                     </a>
                 </p>
             </div>

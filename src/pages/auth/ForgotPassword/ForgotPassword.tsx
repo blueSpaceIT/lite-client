@@ -49,7 +49,7 @@ const ForgotPassword = () => {
                             <img src={"/Logo.png"} alt="" />
                         </div>
                         <h1 className="text-2xl font-bold text-gray-800">
-                            Lite Edu Career
+                            Lite Edu 
                         </h1>
                     </div>
 
