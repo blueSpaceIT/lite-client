@@ -52,6 +52,7 @@ export const baseApi = createApi({
         "students",
         "todays-exams",
         "offline-enrollments",
+        "home-video-sections",
     ],
     endpoints: () => ({}),
 });
