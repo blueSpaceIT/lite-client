@@ -1,7 +1,35 @@
+import type { ReactNode } from "react";
+import { NavLink } from "react-router-dom";
+import { protectedNavItems } from "../../constants";
+import { Collapse } from "antd";
+
+type Props = {
+  to: string;
+  children: ReactNode;
+};
+
+const SidebarNavLink = ({ to, children }: Props) => {
+  const className =
+    "text-white hover:text-white rounded-lg font-medium px-4 py-1.5";
+  const activeClassName =
+    "bg-primary text-white rounded-lg font-medium px-4 py-1.5";
+
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        isActive ? activeClassName : className
+      }
+    >
+      {children}
+    </NavLink>
+  );
+};
+
 const Sidebar = () => {
   return (
-    <div className="md:col-span-2 h-max ">
-      {/* <div className="md:hidden">
+    <div className="md:col-span-2 h-max">
+      <div className="md:hidden">
         <Collapse
           items={[
             {
@@ -10,7 +38,10 @@ const Sidebar = () => {
               children: (
                 <div className="grid gap-2">
                   {protectedNavItems.map((item) => (
-                    <SidebarNavLink key={item.path} to={item.path}>
+                    <SidebarNavLink
+                      key={item.path}
+                      to={item.path}
+                    >
                       {item.name}
                     </SidebarNavLink>
                   ))}
@@ -27,7 +58,7 @@ const Sidebar = () => {
             {item.name}
           </SidebarNavLink>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

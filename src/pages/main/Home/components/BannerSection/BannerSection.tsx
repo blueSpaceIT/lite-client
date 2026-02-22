@@ -1,13 +1,13 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "./BannerSection.css";
-import Container from "../../../../../components/common/Container/Container";
 import { useEffect, useState } from "react";
-import type { TSlider } from "../../../../../types";
-import { sliderService } from "../../../../../store/services/sliderService";
 import { Link } from "react-router-dom";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { sliderService } from "../../../../../store/services/sliderService";
+import type { TSlider } from "../../../../../types";
+import "./BannerSection.css";
 
 const BannerSection = ({ bannerID }: { bannerID: string }) => {
     const [slider, setSlider] = useState<TSlider | null>(null);
@@ -20,31 +20,53 @@ const BannerSection = ({ bannerID }: { bannerID: string }) => {
     }, [data, isSuccess]);
 
     return (
-        <div className="mb-8 lg:my-8 banner">
+        <div className="banner-3d py-8 lg:py-12 overflow-hidden">
             {slider && (
-                <Container>
+                <div className="relative">
                     <Swiper
-                        modules={[Autoplay, Pagination]}
-                        pagination={{
-                            el: ".custom-pagination",
-                            clickable: true,
-                        }}
+                        key={slider._id}
+                        modules={[Autoplay, Pagination, EffectCoverflow]}
+                        effect="coverflow"
+                        grabCursor={true}
+                        centeredSlides={true}
                         loop={true}
+                        slidesPerView={"auto"}
+                        coverflowEffect={{
+                            rotate: 0,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 2.5,
+                            slideShadows: true,
+                        }}
+                        pagination={{
+                            el: ".custom-pagination-3d",
+                            clickable: true,
+                            renderBullet: (index, className) => {
+                                // Only show bullets for the original number of images
+                                if (index >= slider.images.length) return "";
+                                return `<span class="${className}"></span>`;
+                            },
+                        }}
                         autoplay={{
-                            delay: 5000,
+                            delay: 3000,
                             disableOnInteraction: false,
                         }}
-                        spaceBetween={20}
-                        slidesPerView={1}
+                        observer={true}
+                        observeParents={true}
+                        watchSlidesProgress={true}
+                        className="banner-3d-swiper"
                     >
-                        {slider.images.map((item) => (
-                            <SwiperSlide key={item._id}>
+                        {(slider.images.length > 0 && slider.images.length < 6
+                            ? [...slider.images, ...slider.images, ...slider.images]
+                            : slider.images
+                        ).map((item, index) => (
+                            <SwiperSlide key={`${item._id}-${index}`} className="banner-3d-slide">
                                 <Link to={item.destination}>
-                                    <div className="rounded-xl lg:rounded-2xl overflow-hidden">
+                                    <div className="rounded-2xl overflow-hidden shadow-2xl">
                                         <img
                                             src={item.url}
                                             alt=""
-                                            className="size-full object-cover object-center"
+                                            className="w-full h-full object-cover object-center"
                                         />
                                     </div>
                                 </Link>
@@ -52,8 +74,8 @@ const BannerSection = ({ bannerID }: { bannerID: string }) => {
                         ))}
                     </Swiper>
 
-                    <div className="custom-pagination flex justify-center mt-4"></div>
-                </Container>
+                    <div className="custom-pagination-3d flex justify-center mt-6"></div>
+                </div>
             )}
         </div>
     );

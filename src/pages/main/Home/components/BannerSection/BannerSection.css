@@ -1,3 +1,40 @@
-.banner .swiper-pagination-bullet.swiper-pagination-bullet-active {
-    background: #c30a0a;
+/* 3D Coverflow Banner */
+.banner-3d-swiper {
+    width: 100%;
+    padding: 40px 0 20px;
+}
+
+.banner-3d-slide {
+    width: 65%;
+    max-width: 860px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .banner-3d-slide {
+        width: 85%;
+    }
+}
+
+/* Active dot uses primary color */
+.custom-pagination-3d .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    width: 8px;
+    height: 8px;
+    transition: all 0.3s ease;
+}
+
+.custom-pagination-3d .swiper-pagination-bullet-active {
+    background: #20b257;
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* Subtle dark shadow overlay on non-active slides */
+.banner-3d-swiper .swiper-slide-shadow-left,
+.banner-3d-swiper .swiper-slide-shadow-right {
+    background-image: linear-gradient(to left, rgba(5, 5, 20, 0.7), rgba(0, 0, 0, 0));
+    border-radius: 16px;
 }

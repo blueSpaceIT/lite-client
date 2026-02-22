@@ -22,8 +22,8 @@ const ProductCategorySection = () => {
 
     return (
         <Container>
-            <div className="flex justify-center items-center gap-1.5 py-5">
-                <div className="w-max flex gap-2">
+            <div className="flex justify-center items-center gap-1.5 py-5 ">
+                <div className="w-max flex gap-2 text-white">
                     <Button
                         key={1}
                         onClick={() => {
@@ -36,7 +36,7 @@ const ProductCategorySection = () => {
                                 : "text-black border border-slate-400"
                         } text-center px-2.5 py-1 rounded-full cursor-pointer text-xs lg:text-sm`}
                     >
-                        <span>All</span>
+                        <span className="text-white">All</span>
                     </Button>
                     {categories.map((category) => (
                         <Button
@@ -47,7 +47,7 @@ const ProductCategorySection = () => {
                             className={`${
                                 searchParams.get("category") === category._id
                                     ? "text-white bg-primary border border-primary"
-                                    : "text-black border border-slate-400"
+                                    : "text-white border border-slate-400"
                             } text-center px-2.5 py-1 rounded-full cursor-pointer text-xs lg:text-sm`}
                         >
                             <span>{category.name}</span>

@@ -84,7 +84,7 @@ const StudentImageUploader = () => {
                 imageUrl={imageUrl as string}
                 size={{ width: "200", height: "200" }}
             />
-            <p className="italic text-sm font-semibold text-slate-500 mt-1.5">
+            <p className="italic text-sm font-semibold text-slate-500 mt-1.5 text-white">
                 *** Please upload 300*300 and maximum 200kb profile for better
                 experience ***
             </p>

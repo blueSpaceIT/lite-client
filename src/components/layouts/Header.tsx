@@ -1,19 +1,16 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import type { MenuProps } from "antd";
-import { Badge, Dropdown, Space } from "antd";
+import { Badge } from "antd";
 import { useEffect, useState, type ReactNode } from "react";
 import type { FieldValues } from "react-hook-form";
 import { FaBars, FaCartShopping } from "react-icons/fa6";
-import { IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import { navItems } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../store/hook";
-import { courseCategoryService } from "../../store/services/courseCategoryService";
 import { examService } from "../../store/services/examService";
 import { signout, useCurrentToken } from "../../store/slices/authSlice";
 import { useCurrentCartCount } from "../../store/slices/cartSlice";
-import type { TCourseCategory, TCourseContent } from "../../types";
+import type { TCourseContent } from "../../types";
 import Form from "../common/Form/Form";
 import HeaderSearchField from "../common/Form/HeaderSearchField";
 import logo from "/Logo.png";
@@ -25,23 +22,21 @@ type Props = {
 };
 
 const OditiNavLink = ({ to, label, children }: Props) => {
-  const className = "hover:text-primary hover:-translate-y-0.5 transition-all";
-  const activeClassName = "text-primary";
+  const className = "relative text-white/80 hover:text-white px-4 py-1.5 rounded-full transition-all text-sm font-medium inline-flex items-center";
+  const activeClassName = "relative bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold inline-flex items-center";
 
   return (
-    <div className="relative">
+    <NavLink
+      to={to}
+      className={({ isActive }) => (isActive ? activeClassName : className)}
+    >
       {label && (
-        <div className="bg-primary text-[9px] text-white font-semibold w-max px-2 py-0.5 rounded-full absolute -top-[16px] left-0">
+        <span className="bg-white text-primary text-[8px] font-bold px-1.5 py-0.5 rounded-full absolute -top-2 -right-1 leading-none">
           Live
-        </div>
+        </span>
       )}
-      <NavLink
-        to={to}
-        className={({ isActive }) => (isActive ? activeClassName : className)}
-      >
-        {children}
-      </NavLink>
-    </div>
+      {children}
+    </NavLink>
   );
 };
 
@@ -105,17 +100,17 @@ const LogoutModal = () => {
   );
 };
 
-const items: MenuProps["items"] = [
-  {
-    label: <a href="/about-us">About us</a>,
-    key: "0",
-  },
+// const items: MenuProps["items"] = [
+//   {
+//     label: <a href="/about-us">About us</a>,
+//     key: "0",
+//   },
 
-  {
-    label: <a href="/articles">Blog</a>,
-    key: "1",
-  },
-];
+//   {
+//     label: <a href="/articles">Blog</a>,
+//     key: "1",
+//   },
+// ];
 
 const OditiNav = ({
   isNavOpen,
@@ -127,10 +122,6 @@ const OditiNav = ({
   const [exams, setExams] = useState<TCourseContent[]>([]);
   const { data: examData, isSuccess: examSuccess } =
     examService.useGetTodaysExamsQuery(undefined);
-  const [categories, setCategories] = useState<TCourseCategory[]>([]);
-  const { data, isSuccess } = courseCategoryService.useGetCourseCategoriesQuery(
-    [["sort", "createdAt"]],
-  );
 
   useEffect(() => {
     if (examSuccess && examData?.data) {
@@ -138,45 +129,38 @@ const OditiNav = ({
     }
   }, [examData, examSuccess]);
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      setCategories(data?.data?.result);
-    }
-  }, [data, isSuccess]);
-
-  const categoryItems: MenuProps["items"] = categories.map((c, i) => ({
-    label: <a href={`/courses?category=${c._id}`}>{c.name}</a>,
-    key: i,
-  }));
+  // const categoryItems: MenuProps["items"] = categories.map((c, i) => ({
+  //   label: <a href={`/courses?category=${c._id}`}>{c.name}</a>,
+  //   key: i,
+  // }));
 
   return (
     <div
-      className={`${
-        isNavOpen ? "right-0" : "-right-[250px]"
-      } fixed lg:relative top-0 lg:block bg-black  lg:bg-transparent z-50 w-[250px] lg:w-auto lg:right-0 h-full lg:h-auto p-7 lg:p-0 shadow-lg lg:shadow-none transition-all`}
+      className={`${isNavOpen ? "right-0" : "-right-[250px]"
+        } fixed lg:relative top-0 lg:block bg-black  lg:bg-transparent z-50 w-[250px] lg:w-auto lg:right-0 h-full lg:h-auto p-7 lg:p-0 shadow-lg lg:shadow-none transition-all`}
     >
-      <div className="flex flex-col lg:flex-row lg:items-end gap-5">
-        <Dropdown menu={{ items: categoryItems }} trigger={["click"]}>
+      <div className="flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-1 lg:border lg:border-primary/40 lg:px-3 lg:py-2 lg:rounded-full lg:shadow-[0_0_18px_rgba(32,178,87,0.25)] lg:bg-white/5 lg:backdrop-blur-sm">
+        {/* <Dropdown menu={{ items: categoryItems }} trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()} className="cursor-pointer">
             <Space className="hover:text-primary hover:-translate-y-0.5 transition-all">
               Our Courses
               <IoIosArrowDown />
             </Space>
           </a>
-        </Dropdown>
+        </Dropdown> */}
         {navItems.map((item, index) => (
           <OditiNavLink key={index} to={item.path} label={exams?.length > 0}>
-            <p>{item.name}</p>
+            {item.name}
           </OditiNavLink>
         ))}
-        <Dropdown menu={{ items }} trigger={["click"]}>
+        {/* <Dropdown menu={{ items }} trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()} className="cursor-pointer">
             <Space className="hover:text-primary hover:-translate-y-0.5 transition-all">
               More
               <IoIosArrowDown />
             </Space>
           </a>
-        </Dropdown>
+        </Dropdown> */}
       </div>
       <div
         className="size-8 bg-black text-white flex justify-center items-center  absolute top-0 right-0 lg:hidden"
@@ -200,7 +184,7 @@ const Header = () => {
   };
 
   return (
-    <div className="xl:bg-header lg:bg-header pt-6 pb-4 lg:py-3 lg:shadow-md   bg-gradient-to-r from-[#090913]  to-[#0d0d15]">
+    <div className="xl:bg-header lg:bg-header pt-6 pb-4 lg:py-3 lg:shadow-md   bg-gradient-to-r from-[#090913]  to-[#0d0d15] border-b border-white/10">
       <div className="max-w-[1240px] xl:w-full bg-header flex justify-between items-center mx-5 xl:mx-auto px-3 py-3 rounded-4xl gap-2 shadow-md lg:shadow-none lg:py-0 bg-gradient-to-r from-[#090913]  to-[#0d0d15] text-white">
         <Link to={"/"}>
           <div className="w-12 lg:w-20">
@@ -214,17 +198,6 @@ const Header = () => {
           <Form onSubmit={searchHandler}>
             <HeaderSearchField name="searchTerm" placeholder="Search Courses" />
           </Form>
-          <Link to={"/checkout"}>
-            <Badge count={cartCount} showZero>
-              <FaCartShopping className="size-5 lg:size-6 text-white" />
-            </Badge>
-          </Link>
-          <div
-            className="lg:hidden cursor-pointer"
-            onClick={() => setIsNavOpen(!isNavOpen)}
-          >
-            <FaBars className="size-5 ml-2" />
-          </div>
           <div className="flex items-center gap-1.5">
             <Link to={`${token ? "/dashboard" : "/auth/login"}`}>
               <Button className="bg-primary border border-primary text-white text-[10px] md:text-xs font-semibold py-1 px-2.5 lg:px-4 lg:py-2 rounded lg:rounded-lg lg:ml-3 cursor-pointer">
@@ -232,6 +205,17 @@ const Header = () => {
               </Button>
             </Link>
             {token && <LogoutModal />}
+          </div>
+          <Link to={"/checkout"}>
+            <Badge count={cartCount} showZero>
+              <FaCartShopping className="size-5 lg:size-6 text-white mt-2.5" />
+            </Badge>
+          </Link>
+          <div
+            className="lg:hidden cursor-pointer"
+            onClick={() => setIsNavOpen(!isNavOpen)}
+          >
+            <FaBars className="size-5 ml-2" />
           </div>
         </div>
       </div>

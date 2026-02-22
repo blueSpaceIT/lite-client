@@ -29,7 +29,7 @@ const MyCourses = () => {
     }, [data, isSuccess]);
 
     return (
-        <div className="py-6 md:py-10">
+        <div className="py-6 md:py-10 bg-gradient-to-r from-[#090913] to-[#0d0d15]">
             <Container>
                 <div className="grid md:grid-cols-8 lg:grid-cols-12 gap-5">
                     <Sidebar />
