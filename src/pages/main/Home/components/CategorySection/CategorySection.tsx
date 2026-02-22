@@ -40,10 +40,15 @@ const CategorySection = () => {
                             disableOnInteraction: false,
                         }}
                         loop={true}
+                        observer={true}
+                        observeParents={true}
                         className="mySwiper relative"
                     >
-                        {categories.map((category) => (
-                            <SwiperSlide key={category._id}>
+                        {(categories.length > 0 && categories.length < 10
+                            ? [...categories, ...categories]
+                            : categories
+                        ).map((category, index) => (
+                            <SwiperSlide key={`${category._id}-${index}`}>
                                 <Link
                                     to={`/courses?category=${category._id}`}
                                 >
